@@ -4,11 +4,7 @@
 
 @layer components {
   .setting {
-    @apply h-8 lg:h-12 aspect-square border-2 border-solid border-black;
-  }
-
-  .setting > img {
-      @apply h-full w-full;
+    @apply h-8 lg:h-12 aspect-square border-2 border-solid border-black rounded-full;
   }
 
   .setting.selected {

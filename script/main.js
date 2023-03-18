@@ -24,3 +24,59 @@ function getMousePos(canvas, evt) {
   }
 }
 
+// --- Pen ---
+let drawing = false;
+
+function startDraw(e) {
+  drawing = true;
+  context.beginPath();
+  draw(e)
+}
+
+function endDraw(e) {
+  drawing = false;
+}
+
+function draw(e) {
+  if (!drawing) return;
+
+  let { x, y } = getMousePos(canvas, e);
+
+  context.lineTo(x, y);
+  context.stroke();
+
+  // for smoother drawing
+  context.beginPath();
+  context.moveTo(x, y);
+}
+
+// --- Sizes ---
+
+const sizes = {
+  'small': 5,
+  'medium': 10,
+  'big': 15
+}
+
+function setSize(e, size) {
+  context.lineWidth = size;
+  selectSize(e);
+}
+
+function selectSize(e) {
+  if (mode === 'rect')
+    return;
+
+  const sizes = document.getElementsByClassName("size");
+  for (const size of sizes) {
+    size.classList.remove('selected');
+  }
+  
+  if (e === undefined)
+  return;
+  
+  e.target.parentElement.classList.add('selected');
+}
+
+
+

@@ -138,3 +138,18 @@ function polygon(e) {
   context.stroke();
 }
 
+// --- Rectangle ---
+let start = {}
+
+function startRect(e) {
+    start = getMousePos(canvas, e);
+}
+
+function endRect(e) {
+    let { x, y } = getMousePos(canvas, e);
+    context.fillRect(start.x, start.y, x - start.x, y - start.y);
+}
+
+window.addEventListener("mousedown", startRect);
+window.addEventListener("mouseup", endRect);
+

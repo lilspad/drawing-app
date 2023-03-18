@@ -149,7 +149,3 @@ function endRect(e) {
     let { x, y } = getMousePos(canvas, e);
     context.fillRect(start.x, start.y, x - start.x, y - start.y);
 }
-
-window.addEventListener("mousedown", startRect);
-window.addEventListener("mouseup", endRect);
-

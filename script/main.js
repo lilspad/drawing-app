@@ -78,5 +78,63 @@ function selectSize(e) {
   e.target.parentElement.classList.add('selected');
 }
 
+// --- Line ---
 
+function startLine(e) {
+  drawing = true;
+  context.beginLine();
+  draw(e)
+}
+
+function endLine(e) {
+  drawing = false;
+  let { x, y } = getMousePos(canvas, e);
+  
+  context.lineTo(x, y);
+  context.stroke();
+}
+
+// --- Polygon ---
+
+let poly = false;
+let polyTimeout = undefined;
+
+function startPolygon(e) {
+  if (e.target.id !== 'canvas')
+    return;
+
+  drawing = true;
+
+  if (poly) {
+    polygon(e);
+  }
+  else {
+    context.beginPath();
+    draw(e);
+  }
+  poly = true;
+}
+
+function endPolygon(e) {
+  if (!poly)
+    return;
+
+  polyTimeout = setTimeout(() => {
+    drawing = false;
+    context.closePath();
+    context.stroke();
+
+    poly = false;
+  }, 1000);
+}
+
+function polygon(e) {
+  if (!drawing) return;
+  clearTimeout(polyTimeout);
+
+  let { x, y } = getMousePos(canvas, e);
+  
+  context.lineTo(x, y);
+  context.stroke();
+}
 

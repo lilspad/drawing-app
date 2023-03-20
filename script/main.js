@@ -150,6 +150,12 @@ function endRect(e) {
     context.fillRect(start.x, start.y, x - start.x, y - start.y);
 }
 
+// --- Clear ---
+
+function clearCanvas() {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 // --- Mode ---
 
 let mode = 'draw';

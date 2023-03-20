@@ -149,3 +149,135 @@ function endRect(e) {
     let { x, y } = getMousePos(canvas, e);
     context.fillRect(start.x, start.y, x - start.x, y - start.y);
 }
+
+// --- Mode ---
+
+let mode = 'draw';
+
+function selectMode(e, newMode) {
+  const tools = document.getElementsByClassName("tool");
+  for (const tool of tools) {
+    tool.classList.remove('selected');
+  }
+  
+  const size = document.querySelector(".size.selected");
+  if (size !== null)
+  {
+    size.classList.remove('hide-select');
+    if (newMode === 'rect')
+      size.classList.add('hide-select');
+  }
+    
+  
+  e.target.parentElement.classList.add('selected');
+
+  mode = newMode;
+}
+
+const activeEvents = {
+  "mousedown": undefined,
+  "mouseup": undefined,
+  "mousemove": undefined
+};
+
+function setMode(e, mode) {
+  for (const event in activeEvents) {
+    window.removeEventListener(event, activeEvents[event]);
+    activeEvents[event] = undefined;
+  }
+
+  switch (mode) {
+    case 'pen':
+      window.addEventListener("mousedown", startDraw);
+      window.addEventListener("mouseup", endDraw);
+      window.addEventListener("mousemove", draw);
+
+      activeEvents['mousedown'] = startDraw;
+      activeEvents['mouseup'] = endDraw;
+      activeEvents['mousemove'] = draw;
+      break;
+    case 'line':
+      window.addEventListener("mousedown", startLine);
+      window.addEventListener("mouseup", endLine);
+
+      activeEvents['mousedown'] = startLine;
+      activeEvents['mouseup'] = endLine;
+      break;
+    case 'polygon':
+      window.addEventListener("mousedown", startPolygon);
+      window.addEventListener("mouseup", endPolygon);
+
+      activeEvents['mousedown'] = startPolygon;
+      activeEvents['mouseup'] = endPolygon;
+      break;
+    case 'rect':
+      window.addEventListener("mousedown", startRect);
+      window.addEventListener("mouseup", endRect);
+
+      activeEvents['mousedown'] = startRect;
+      activeEvents['mouseup'] = endRect;
+      break;
+
+    default:
+      break;
+  }
+
+  selectMode(e, mode);
+}
+
+// --- Colours ---
+
+const colors = {
+    "black": "#000000",
+    "white": "#ffffff",
+    "red": "#ef4444",
+    "green": "#22c55e",
+    "blue": "#3b82f6",
+    "yellow": "#eab308",
+    "orange": "#f97316",
+    "violet": "#8b5cf6"
+}
+
+function setColor(e, color) {
+  context.strokeStyle = colors[color];
+  context.fillStyle = colors[color];
+  selectColor(e);
+}
+
+function selectColor(e) {
+  const colors = document.getElementById("colors").children;
+  for (const color of colors) {
+    color.classList.remove('selected');
+  }
+
+  e.target.classList.add('selected');
+}
+
+// --- Initilise ---
+
+function initialize() {
+  const colorButtons = document.getElementById('colors').children;
+  for (const colorButton of colorButtons) {
+    colorButton.addEventListener('click', (e) => { setColor(e, colorButton.classList.value.replace(/bg-(\w*).*/, '$1'))} );
+  }
+
+  const tools = document.getElementsByClassName('tool');
+  for (const tool of tools) {
+    tool.addEventListener('click', (e) => { setMode(e, tool.id)} );
+  }
+
+  const sizeButtons = document.getElementsByClassName('size');
+  for (const sizeButton of sizeButtons) {
+    sizeButton.addEventListener('click', (e) => { setSize(e, sizes[sizeButton.id])} );
+  }
+
+  document.getElementById('clear').addEventListener('click', clearCanvas);
+
+  // set default settings
+  context.lineCap = 'round';
+  document.getElementById('small').firstElementChild.click();
+  document.getElementById('pen').firstElementChild.click();
+  document.getElementById('black').click();
+}
+
+initialize();

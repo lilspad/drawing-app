@@ -13,10 +13,11 @@
   <title>Drawing App</title>
 </head>
 
-<body class="flex items-center justify-center h-full py-8 px-8 w-full lg:w-4/5 xl:w-3/4 2xl:w-2/3 mx-auto">
+<body class="flex items-center justify-center h-screen py-8 px-8 w-full mx-auto">
   
   <div class="w-full flex flex-row justify-between">
-    <div id="colors" class="grid grid-rows-4 grid-cols-2 gap-1">
+
+    <div id="colors" class="grid grid-rows-4 grid-cols-2 gap-1 h-1/2 w-fit m-auto">
       <button id="black" class="bg-black setting"></button>
       <button class="bg-white setting"></button>
       <button class="bg-red-500 setting"></button>
@@ -27,32 +28,26 @@
       <button class="bg-violet-500 setting"></button>
     </div>
 
-    <canvas id="canvas" class="w-9/12 max-h-full aspect-video border-2 border-black border-solid mb-8"></canvas>
+    <canvas id="canvas" class="w-3/4 max-h-full aspect-video border-2 border-black border-solid mb-8"></canvas>
 
-    <div id="settings" class="grid grid-rows-8 grid-cols-1 gap-1">
+    <div id="settings" class="grid grid-rows-5 grid-cols-2 gap-3 h-124 w-fit m-auto">
       <button id="pen" class="setting tool">
         <i class="fa-solid fa-pencil"></i>
       </button>
       <button id="small" class="setting size">
-        <span class="material-symbols-outlined">
-          pen_size_1
-        </span>
+        <img src="assets/size1.svg">
       </button>
       <button id="medium" class="setting size">
-        <span class="material-symbols-outlined">
-          pen_size_3
-        </span>
+        <img src="assets/size2.svg">
       </button>
       <button id="big" class="setting size">
-        <span class="material-symbols-outlined">
-          pen_size_5
-        </span>
+        <img src="assets/size3.svg">
       </button>
       <button id="line" class="setting tool">
         <i class="fa-solid fa-ruler"></i>
       </button>
       <button id="polygon" class="setting tool">
-        <i class="fa-solid fa-draw-polygon"></i>
+        <i class="fa-solid fa-circle-nodes"></i>
       </button>
       <button id="rect" class="setting tool">
         <i class="fa-solid fa-square-full"></i>

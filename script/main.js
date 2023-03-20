@@ -82,8 +82,8 @@ function selectSize(e) {
 
 function startLine(e) {
   drawing = true;
-  context.beginLine();
-  draw(e)
+  context.beginPath();
+  draw(e);
 }
 
 function endLine(e) {
@@ -139,6 +139,7 @@ function polygon(e) {
 }
 
 // --- Rectangle ---
+
 let start = {}
 
 function startRect(e) {

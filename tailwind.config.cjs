@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   purge: {
-    content: ['./**/*.html'],
+    content: ['./*.html'],
     safelist: [
       'bg-red-500',
       'bg-orange-500',
@@ -11,7 +11,7 @@ module.exports = {
       'bg-violet-500'
     ]
   },
-  content: ['./**/*.{html,js}'],
+  content: ['./*.{html,js}'],
   theme: {
     extend: {},
   },

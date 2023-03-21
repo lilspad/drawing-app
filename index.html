@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="icon" href="fc.ico" />
+  <link rel="icon" href="favicon.svg" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <script src="https://kit.fontawesome.com/349bd4180c.js" crossorigin="anonymous"></script>
@@ -13,7 +13,9 @@
   <title>Drawing App</title>
 </head>
 
-<body class="flex items-center justify-center h-screen py-8 px-8 w-full mx-auto">
+<body>
+
+<main class="flex items-center justify-center h-full py-8 px-8 w-full mx-auto">
   
   <div class="w-full flex flex-row justify-between">
 
@@ -28,9 +30,9 @@
       <button class="bg-violet-500 setting"></button>
     </div>
 
-    <canvas id="canvas" class="w-3/4 max-h-full aspect-video border-2 border-black border-solid mb-8"></canvas>
+    <canvas id="canvas" class="w-3/4 max-h-full aspect-video border-2 border-black border-solid mb-8 bg-white"></canvas>
 
-    <div id="settings" class="grid grid-rows-5 grid-cols-2 gap-3 h-124 w-fit m-auto">
+    <div id="settings" class="grid grid-rows-4 grid-cols-2 gap-1 h-1/2 w-fit m-auto">
       <button id="pen" class="setting tool">
         <i class="fa-solid fa-pencil"></i>
       </button>
@@ -47,10 +49,13 @@
         <img src="assets/line.svg">
       </button>
       <button id="polygon" class="setting tool">
-        <i class="fa-solid fa-circle-nodes"></i>
+        <img src="assets/poly.svg" >
       </button>
       <button id="rect" class="setting tool">
         <i class="fa-solid fa-square-full"></i>
+      </button>
+      <button id="circ" class="setting tool">
+        <i class="fa-solid fa-circle"></i>
       </button>
       <button id="clear" class="setting">
         <i class="fa-regular fa-trash-can"></i>
@@ -58,6 +63,9 @@
     </div>
   </div>
   <script type="module" src="./script/main.js"></script>
+</main>
+<div class="w-screen h-full">
+  <button id="download" class="block border-black border-2 rounded-full h-fit w-1/4 p-2 m-auto hover:border-red-500 hover:text-red-500 active:border-green-500 active:text-green-500">Save your drawing!</button>
+</div>
 </body>
-
 </html>

@@ -1,6 +1,5 @@
 import '../style/style.css'
 
-const container = document.getElementById("canvas-container");
 const canvas = document.getElementById("canvas");
 const width = 1920;
 const height = 1080;
@@ -23,6 +22,9 @@ function getMousePos(canvas, evt) {
     y: (evt.clientY - rect.top) * scaleY
   }
 }
+
+context.fillStyle = 'white';
+context.fillRect(0, 0, canvas.width, canvas.height);
 
 // --- Pen ---
 let drawing = false;
@@ -151,10 +153,32 @@ function endRect(e) {
     context.fillRect(start.x, start.y, x - start.x, y - start.y);
 }
 
+// --- Circle ---
+
+let circStart = {};
+
+function startCirc(e) {
+  circStart = getMousePos(canvas, e);
+  context.beginPath()
+}
+
+function endCirc(e) {
+  let { x, y } = getMousePos(canvas, e);
+  x -= circStart.x;
+  y -= circStart.y;
+  let radius = Math.sqrt((x * x) + (y * y));
+  context.arc(circStart.x, circStart.y, radius, 0, 2 * Math.PI, false);
+  context.fill();
+  context.closePath();
+}
+
 // --- Clear ---
 
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
+
+  context.fillStyle = 'white';
+  context.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 // --- Mode ---
@@ -171,7 +195,7 @@ function selectMode(e, newMode) {
   if (size !== null)
   {
     size.classList.remove('hide-select');
-    if (newMode === 'rect')
+    if (newMode === 'rect' || newMode === 'circ')
       size.classList.add('hide-select');
   }
     
@@ -224,6 +248,12 @@ function setMode(e, mode) {
       activeEvents['mousedown'] = startRect;
       activeEvents['mouseup'] = endRect;
       break;
+    case 'circ':
+      window.addEventListener("mousedown", startCirc);
+      window.addEventListener("mouseup", endCirc);
+
+      activeEvents['mousedown'] = startCirc;
+      activeEvents['mouseup'] = endCirc;
 
     default:
       break;
@@ -288,3 +318,15 @@ function initialize() {
 }
 
 initialize();
+
+// --- Download ---
+
+document.getElementById('download').addEventListener('click', function(e) {
+  let canvasUrl = canvas.toDataURL("image/png", 1);
+  console.log(canvasUrl);
+  const createEl = document.createElement('a');
+  createEl.href = canvasUrl;
+  createEl.download = "your-drawing";
+  createEl.click();
+  createEl.remove();
+});
